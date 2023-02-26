@@ -1,0 +1,63 @@
+{
+  "publisher": "niko-ni",
+  "name": "vscode-ext-qrcode",
+  "displayName": "vscode-ext-qrcode",
+  "version": "0.3.11",
+  "packageManager": "pnpm@7.28.0",
+  "description": "The vscode extension for v-qr-code-next module.",
+  "author": "Niko Ni",
+  "license": "MIT",
+  "homepage": "https://github.com/bluepower/vscode-ext-qrcode#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bluepower/vscode-ext-qrcode"
+  },
+  "bugs": {
+    "url": "https://github.com/bluepower/vscode-ext-qrcode/issues"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/index.js",
+  "icon": "public/icon.png",
+  "files": [
+    "dist",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "vscode": "^1.75.1"
+  },
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "vpoc.qrcode",
+        "title": "Vite POC - QR Code",
+        "category": "v-poc-ext"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --external vscode",
+    "dev": "pnpm run build --watch",
+    "vscode:prepublish": "pnpm run build",
+    "publish": "vsce publish --no-dependencies",
+    "pack": "vsce package --no-dependencies",
+    "typecheck": "tsc --noEmit",
+    "release": "bumpp && pnpm run publish"
+  },
+  "devDependencies": {
+    "@types/node": "^18.14.1",
+    "@types/vscode": "^1.75.1",
+    "@vscode/vsce": "^2.18.0",
+    "bumpp": "^9.0.0",
+    "esno": "^0.16.3",
+    "pnpm": "^7.28.0",
+    "rimraf": "^4.1.2",
+    "tsup": "^6.6.3",
+    "typescript": "^4.9.5",
+    "v-qr-code-next": "^0.1.15"
+  }
+}
