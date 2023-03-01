@@ -25,6 +25,13 @@ export function activate(context: vscode.ExtensionContext) {
             <p>${qr.createImgTag()}</p><br /><br />
             <fieldset>
               <legend>Simple qr-code generator</legend>
+              Mode: 
+              <select id="mode-area">
+                <option value="image">Image</option>
+                <option value="svg">SVG</option>
+                <option value="table">Table</option>
+                <option value="dataurl">DataURL</option>
+              </select><br /><br />
               <input id="input-area" type="text" placeholder="Please input content" style="width: 99%"/>
               <p id="target-area">-</p>
             </fieldset>
@@ -32,9 +39,16 @@ export function activate(context: vscode.ExtensionContext) {
             <script type="module">
               import qrcode from "https://unpkg.com/v-qr-code-next@0.1.15/dist/v-qr-code-next.es.js";
 
+              const modeNode = document.getElementById("mode-area");
               const inputNode = document.getElementById("input-area");
               const targetNode = document.getElementById("target-area");
-              if (inputNode && targetNode) {
+              if (modeNode && inputNode && targetNode) {
+                const modeMap = {
+                  "image": "createImgTag",
+                  "svg": "createSvgTag",
+                  "table": "createTableTag",
+                  "dataurl": "createDataURL",
+                };
                 const typeNumber = 8;
                 const errorCorrectionLevel = "L";  
                 
@@ -43,7 +57,10 @@ export function activate(context: vscode.ExtensionContext) {
                   if (val) {
                     const qr = qrcode(typeNumber, errorCorrectionLevel);
                     qr.addData(val).make();
-                    targetNode.innerHTML = qr.createImgTag();
+                    const mode = modeNode[modeNode.selectedIndex].value;
+                    const prefix = mode === "dataurl" ? '<img src="' : "";
+                    const suffix = mode === "dataurl" ? '" />' : "";
+                    targetNode.innerHTML = prefix + qr[modeMap[mode]]() + suffix;
                   } else {
                     targetNode.innerHTML = "-";
                   }
