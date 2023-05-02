@@ -37,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
             </fieldset>
 
             <script type="module">
-              import qrcode from "https://unpkg.com/v-qr-code-next@0.1.15/dist/v-qr-code-next.es.js";
+              import qrcode from "https://unpkg.com/v-qr-code-next@0.2.3/dist/v-qr-code-next.es.js";
 
               const modeNode = document.getElementById("mode-area");
               const inputNode = document.getElementById("input-area");
